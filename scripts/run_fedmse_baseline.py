@@ -15,7 +15,8 @@ import random
 import logging
 
 # Change to baseline/src directory
-os.chdir('baseline/src')
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(os.path.join(script_dir, '../baseline/src'))
 sys.path.insert(0, '.')
 
 from Model import Shrink_Autoencoder
@@ -163,7 +164,7 @@ for round_num in range(NUM_ROUNDS):
     for i, client in enumerate(selected_clients):
         device_trainer = ClientTrainer(
             model=global_aggregator.model,
-            save_dir=f"../Checkpoint/Spark/FullScale/Client_{i}",
+            save_dir=f"../models/fedmse_checkpoints/Client_{i}",
             epoch=EPOCH,
             lr_rate=LR_RATE,
             update_type="mse_avg"
@@ -215,9 +216,9 @@ print("TRAINING COMPLETED")
 print("="*60)
 
 # Save results
-os.makedirs('../outputs/results', exist_ok=True)
+os.makedirs('../results/data', exist_ok=True)
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-results_path = f'../outputs/results/fedmse_fullscale_{timestamp}.json'
+results_path = f'../results/data/fedmse_fullscale_{timestamp}.json'
 with open(results_path, 'w') as f:
     json.dump(all_results, f, indent=2)
 print(f"Results saved to: {results_path}")

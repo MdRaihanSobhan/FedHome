@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Find the latest results file
-results_dir = 'baseline/outputs/results'
+results_dir = '../results/data'
 results_files = [f for f in os.listdir(results_dir) if f.startswith('fedmse_fullscale_') and f.endswith('.json')]
 
 if not results_files:
@@ -39,7 +39,7 @@ num_clients = 50
 final_aucs = [final_round.get(f'client_{i}_auc', 0) for i in range(num_clients)]
 
 # Create figures directory
-fig_dir = 'outputs/figures'
+fig_dir = '../results/figures'
 os.makedirs(fig_dir, exist_ok=True)
 
 # ============ Figure 1: AUC and Loss Convergence ============
