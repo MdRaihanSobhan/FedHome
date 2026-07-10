@@ -4,6 +4,9 @@
 **Course:** Big Data Analytics  
 **Project:** FedHome - Spark-Enhanced Federated Learning System
 
+**Last Updated:** 2026-10-07  
+**Status:** ✅ Phase 1 Complete - Baseline Results Achieved
+
 ---
 
 ## 📖 Overview
@@ -73,23 +76,28 @@ FedHome is a novel federated learning framework for IoT botnet detection that ex
 ```
 FedHome_Spark/
 ├── README.md                 # This file
-├── PLAN.md                   # Implementation plan
+├── PLAN.md                   # Implementation plan (UPDATED)
 ├── baseline/                 # FedMSE baseline repository
-│   ├── src/
-│   ├── Data/
-│   └── ...
-├── notebooks/
-│   ├── 01_spark_setup.ipynb           # Spark installation & testing
-│   ├── 02_fedmse_spark_fullscale.ipynb # FedMSE with Spark
-│   └── 03_fedhome_spark_clustering.ipynb # FedHome clustering
-├── outputs/
-│   ├── figures/              # Generated figures
-│   ├── results/              # JSON results
-│   └── logs/                 # Training logs
-├── spark_env/                # Spark configuration
-└── Knowledge_Base/
-    ├── Context.md            # Project requirements
-    └── Initial_Plan.md       # Initial implementation plan
+│   ├── src/                 # FedMSE source code
+│   └── Data/                # Dataset (50 clients, Non-IID)
+├── experiments/              # Jupyter notebooks
+│   ├── 01_spark_setup_simple.ipynb
+│   ├── 02_fedmse_spark_fullscale.ipynb
+│   └── 03_fedhome_spark_clustering.ipynb
+├── scripts/                  # Python scripts
+│   ├── run_fedmse_baseline.py
+│   ├── generate_figures.py
+│   └── test_setup.py
+├── results/                  # Experiment outputs
+│   ├── data/                # JSON results
+│   ├── figures/             # Generated figures (300 DPI)
+│   └── logs/                # Training logs
+├── models/                   # Trained model checkpoints
+│   └── fedmse_checkpoints/  # 20 client models
+├── Knowledge_Base/           # Project documentation
+│   ├── Context.md
+│   └── Initial_Plan.md
+└── spark_env/                # Virtual environment
 ```
 
 ---
@@ -112,21 +120,28 @@ pip install pyspark pandas numpy torch scikit-learn matplotlib seaborn
 python -c "import pyspark; print(pyspark.__version__)"
 ```
 
-### Running the Project
+### Running Experiments
 
-1. **Spark Setup Test:**
+1. **Verify Setup:**
    ```bash
-   jupyter notebook notebooks/01_spark_setup.ipynb
+   python scripts/test_setup.py
    ```
 
-2. **FedMSE Full-Scale with Spark:**
+2. **Run FedMSE Baseline:**
    ```bash
-   jupyter notebook notebooks/02_fedmse_spark_fullscale.ipynb
+   python scripts/run_fedmse_baseline.py
    ```
 
-3. **FedHome Clustering:**
+3. **Generate Figures:**
    ```bash
-   jupyter notebook notebooks/03_fedhome_spark_clustering.ipynb
+   cd scripts && python generate_figures.py
+   ```
+
+4. **Run Notebooks (Interactive):**
+   ```bash
+   jupyter notebook experiments/01_spark_setup_simple.ipynb
+   jupyter notebook experiments/02_fedmse_spark_fullscale.ipynb
+   jupyter notebook experiments/03_fedhome_spark_clustering.ipynb
    ```
 
 ---
@@ -154,14 +169,29 @@ python -c "import pyspark; print(pyspark.__version__)"
 
 ---
 
-## 📈 Expected Results
+## 📈 Results Summary
 
-| Metric | FedMSE Baseline | FedHome (Expected) |
-|--------|-----------------|-------------------|
-| Average AUC | ~0.97 | ~0.98+ |
-| Non-IID Robustness | Moderate | High |
-| Scalability | Limited | Spark-enhanced |
-| Device-Type Awareness | No | Yes |
+### FedMSE Baseline (COMPLETED ✅)
+
+| Metric | Value |
+|--------|-------|
+| **Clients** | 50 (Non-IID) |
+| **Global Rounds** | 20 |
+| **Local Epochs** | 100 |
+| **Final Average AUC** | **0.9829** |
+| **Min AUC** | 0.8021 |
+| **Max AUC** | 1.0000 |
+| **Std Dev** | 0.0325 |
+| **Initial Loss** | 1.3671 |
+| **Final Loss** | 0.8063 |
+| **Loss Reduction** | **41.0%** |
+| **Training Time** | 2.87 minutes |
+
+### Generated Figures
+
+- `results/figures/auc_convergence_fullscale.png` - AUC & loss convergence over 20 rounds
+- `results/figures/client_auc_distribution.png` - Per-client AUC distribution with statistics
+- `results/figures/training_time_per_round.png` - Training time analysis
 
 ---
 
