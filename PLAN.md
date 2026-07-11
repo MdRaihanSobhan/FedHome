@@ -262,15 +262,5 @@ spark = SparkSession.builder \
 
 ---
 
-## 📝 Notes for Presentation
-
-- ✅ Emphasize **Apache Spark** as the distributed computing framework
-- ✅ Mention **Spark MLlib** for clustering
-- ✅ Focus on **scalability** and **big data processing** capabilities
-- ✅ Architecture diagram shows Spark integration clearly
-- ✅ Baseline results validated (0.9829 AUC)
-
----
-
 **Last Updated:** 2026-10-07  
 **Status:** ✅ Phase 1 Complete | 🔄 Phase 2-3 Ready | ⏳ Phase 4-5 Pending
